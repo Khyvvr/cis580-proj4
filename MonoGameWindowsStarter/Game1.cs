@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MonoGameWindowsStarter
 {
@@ -11,6 +13,10 @@ namespace MonoGameWindowsStarter
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteSheet sheet;
+        Player player;
+        List<Enemy> enemies;
+        AxisList world;
 
         public Game1()
         {
@@ -37,10 +43,24 @@ namespace MonoGameWindowsStarter
         /// </summary>
         protected override void LoadContent()
         {
+#if VISUAL_DEBUG
+            VisualDebugging.LoadContent(Content);
+#endif
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            var t = Content.Load<Texture2D>("spritesheet");
+            sheet = new SpriteSheet(t, 34, 34, 1, 2);
+
+            var playerFrames = from index in Enumerable.Range(19, 30) select sheet[index];
+            player = new Player(playerFrames);
+
+            world = new AxisList();
+            foreach (Enemy enemy in enemies)
+            {
+                world.AddGameObject(enemy);
+            }
         }
 
         /// <summary>
@@ -63,6 +83,10 @@ namespace MonoGameWindowsStarter
                 Exit();
 
             // TODO: Add your update logic here
+            player.Update(gameTime);
+
+            var enemyQuery = world.QueryRange(player.Bounds.X, player.Bounds.X + player.Bounds.Width);
+            player.CheckForEnemyCollision(enemyQuery);
 
             base.Update(gameTime);
         }
@@ -73,9 +97,31 @@ namespace MonoGameWindowsStarter
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
+
+            // Calculate and apply the world/view transform
+            var offset = new Vector2(200, 300) - player.Position;
+            var t = Matrix.CreateTranslation(offset.X, offset.Y, 0);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, t);
 
             // TODO: Add your drawing code here
+            var enemyQuery = world.QueryRange(player.Position.X - 221, player.Position.X + 400);
+            foreach (Enemy enemy in enemyQuery)
+            {
+                enemy.Draw(spriteBatch);
+            }
+            Debug.WriteLine($"{enemyQuery.Count()} Platforms rendered");
+
+            player.Draw(spriteBatch);
+
+            //draw certain amount of sprites in spritesheet on screen
+            for (var i = 0; i < 15; i++)
+            {
+                sheet[i].Draw(spriteBatch, new Vector2(i * 25, 25), Color.White);
+            }
+
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
