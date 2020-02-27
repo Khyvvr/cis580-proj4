@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace MonoGameWindowsStarter
 {
@@ -11,12 +13,15 @@ namespace MonoGameWindowsStarter
     /// </summary>
     public class Game1 : Game
     {
+        Random r = new Random();
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteSheet sheet;
         Player player;
         List<Enemy> enemies;
         AxisList world;
+
+        Texture2D background;
 
         public Game1()
         {
@@ -50,11 +55,20 @@ namespace MonoGameWindowsStarter
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            background = Content.Load<Texture2D>("background");
+
             var t = Content.Load<Texture2D>("spritesheet");
             sheet = new SpriteSheet(t, 34, 34, 1, 2);
 
-            var playerFrames = from index in Enumerable.Range(19, 30) select sheet[index];
+            var playerFrames = from index in Enumerable.Range(8, 15) select sheet[index];
             player = new Player(playerFrames);
+
+            var enemyFrames = from index in Enumerable.Range(0, 7) select sheet[index];
+            enemies.Add(new Enemy(new BoundingRectangle(50, 50, 34, 34), sheet[1], new Vector2(100, 100), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 100, 34, 34), sheet[2], new Vector2(200, 200), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 200, 34, 34), sheet[3], new Vector2(300, 300), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 400, 34, 34), sheet[4], new Vector2(400, 400), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 500, 34, 34), sheet[5], new Vector2(500, 500), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
 
             world = new AxisList();
             foreach (Enemy enemy in enemies)
@@ -85,6 +99,8 @@ namespace MonoGameWindowsStarter
             // TODO: Add your update logic here
             player.Update(gameTime);
 
+            //update logic for enemies here
+
             var enemyQuery = world.QueryRange(player.Bounds.X, player.Bounds.X + player.Bounds.Width);
             player.CheckForEnemyCollision(enemyQuery);
 
@@ -103,6 +119,8 @@ namespace MonoGameWindowsStarter
             var offset = new Vector2(200, 300) - player.Position;
             var t = Matrix.CreateTranslation(offset.X, offset.Y, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, t);
+
+            spriteBatch.Draw(background, new Rectangle(0, 0, 800, 800), Color.Black);
 
             // TODO: Add your drawing code here
             var enemyQuery = world.QueryRange(player.Position.X - 221, player.Position.X + 400);
