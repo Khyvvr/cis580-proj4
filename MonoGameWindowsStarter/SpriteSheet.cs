@@ -17,7 +17,7 @@ namespace MonoGameWindowsStarter
         Texture2D sheet;
 
         // An array of sprites found in the spritesheet
-        Sprite[] sprites;
+        public Sprite[] sprites;
 
         /// <summary>
         /// Constructs a SpriteSheet from a texture
@@ -31,7 +31,7 @@ namespace MonoGameWindowsStarter
         {
             sheet = texture;
             var columns = (texture.Width - offset) / (width + gutter);
-            var rows = (texture.Height - offset) / (height + gutter);
+            var rows = (texture.Height) / (height);
             sprites = new Sprite[rows * columns];
             for (int y = 0; y < rows; y++)
             {

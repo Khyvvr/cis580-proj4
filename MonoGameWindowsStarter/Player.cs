@@ -93,23 +93,23 @@ namespace MonoGameWindowsStarter
                 case PlayerAnimationState.MovingLeft:
                     animationTimer += gameTime.ElapsedGameTime;
                     spriteEffects = SpriteEffects.None;
-                    // Walking frames are 9 & 10
+                    
                     if (animationTimer.TotalMilliseconds > FRAME_RATE * 2)
                     {
                         animationTimer = new TimeSpan(0);
                     }
-                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE) + 9;
+                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE);
                     break;
 
                 case PlayerAnimationState.MovingRight:
                     animationTimer += gameTime.ElapsedGameTime;
                     spriteEffects = SpriteEffects.FlipHorizontally;
-                    // Walking frames are 9 & 10
+                    
                     if (animationTimer.TotalMilliseconds > FRAME_RATE * 2)
                     {
                         animationTimer = new TimeSpan(0);
                     }
-                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE) + 15;
+                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE);
                     break;
 
             }
