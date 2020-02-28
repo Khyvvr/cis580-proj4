@@ -141,7 +141,7 @@ namespace MonoGameWindowsStarter
             {
                 if (Bounds.CollidesWith(enemy.Bounds))
                 {
-                    animationState = PlayerAnimationState.Dead;
+                    animationState = PlayerAnimationState.Idle;
                 }
             }
         }

@@ -66,16 +66,16 @@ namespace MonoGameWindowsStarter
                     animationState = EnemyAnimationState.MovingUp;
                 }
 
-                var oldPos = position.Y;
-                position.Y += (float)gameTime.ElapsedGameTime.TotalMilliseconds * velocity.Y;
+                float oldPos = position.Y;
+                position.Y += (float)gameTime.ElapsedGameTime.TotalMilliseconds * velocity.Y / 2;
 
-                if (position.Y > oldPos + moveLength || position.Y < oldPos - moveLength)
+                if (position.Y > (oldPos + moveLength) | position.Y < (oldPos - moveLength))
                 {
                     oldPos = position.Y;
                     velocity.Y *= -1;
                 }
             }
-            else if (movement == 1)
+            else if  (movement == 1)
             {
                 bounds.X = position.X;
                 bounds.Y = position.Y;
@@ -89,10 +89,10 @@ namespace MonoGameWindowsStarter
                     animationState = EnemyAnimationState.MovingLeft;
                 }
                 
-                var oldPos = position.X;
-                position.X += (float)gameTime.ElapsedGameTime.TotalMilliseconds * velocity.X;
+                float oldPos = position.X;
+                position.X += (float)gameTime.ElapsedGameTime.TotalMilliseconds * velocity.X / 2;
 
-                if (position.X > oldPos + moveLength || position.X < oldPos - moveLength)
+                if (position.X > oldPos + moveLength | position.X < oldPos - moveLength)
                 {
                     oldPos = position.X;
                     velocity.X *= -1;

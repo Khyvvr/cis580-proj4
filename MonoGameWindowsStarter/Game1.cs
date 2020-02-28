@@ -65,9 +65,9 @@ namespace MonoGameWindowsStarter
             player = new Player(playerFrames);
 
             var enemyFrames = from index in Enumerable.Range(0, 7) select sheet[index];
-            enemies.Add(new Enemy(new BoundingRectangle(50, 50, 34, 34), sheet[1], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 50, 34, 34), sheet[1], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 0, 200));
             enemies.Add(new Enemy(new BoundingRectangle(50, 100, 34, 34), sheet[2], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
-            enemies.Add(new Enemy(new BoundingRectangle(50, 200, 34, 34), sheet[3], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 200, 34, 34), sheet[3], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 0, 200));
             enemies.Add(new Enemy(new BoundingRectangle(50, 400, 34, 34), sheet[4], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
             enemies.Add(new Enemy(new BoundingRectangle(50, 500, 34, 34), sheet[5], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
             
