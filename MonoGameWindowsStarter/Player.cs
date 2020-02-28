@@ -38,7 +38,7 @@ namespace MonoGameWindowsStarter
         Color color = Color.White;
 
         Vector2 origin = new Vector2(15, 33);
-        public Vector2 Position = new Vector2(200, 200);
+        public Vector2 Position = new Vector2(50, 100);
         public BoundingRectangle Bounds => new BoundingRectangle(Position - 1.8f * origin, 34, 34);
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace MonoGameWindowsStarter
             switch (animationState)
             {
                 case PlayerAnimationState.Idle:
-                    currentFrame = 0;
+                    currentFrame = 2;
                     animationTimer = new TimeSpan(0);
                     break;
 
@@ -98,14 +98,34 @@ namespace MonoGameWindowsStarter
                     {
                         animationTimer = new TimeSpan(0);
                     }
-                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE);
+                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE) + 4;
                     break;
 
                 case PlayerAnimationState.MovingRight:
                     animationTimer += gameTime.ElapsedGameTime;
-                    spriteEffects = SpriteEffects.FlipHorizontally;
+                    spriteEffects = SpriteEffects.None;
                     
                     if (animationTimer.TotalMilliseconds > FRAME_RATE * 2)
+                    {
+                        animationTimer = new TimeSpan(0);
+                    }
+                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE) + 6;
+                    break;
+                case PlayerAnimationState.MovingDown:
+                    animationTimer += gameTime.ElapsedGameTime;
+                    spriteEffects = SpriteEffects.None;
+
+                    if (animationTimer.TotalMilliseconds > FRAME_RATE * 2)
+                    {
+                        animationTimer = new TimeSpan(0);
+                    }
+                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE) + 2;
+                    break;
+                case PlayerAnimationState.MovingUp:
+                    animationTimer += gameTime.ElapsedGameTime;
+                    spriteEffects = SpriteEffects.None;
+
+                    if (animationTimer.TotalMilliseconds > FRAME_RATE *2)
                     {
                         animationTimer = new TimeSpan(0);
                     }

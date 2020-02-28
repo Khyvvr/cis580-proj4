@@ -65,11 +65,11 @@ namespace MonoGameWindowsStarter
             player = new Player(playerFrames);
 
             var enemyFrames = from index in Enumerable.Range(0, 7) select sheet[index];
-            enemies.Add(new Enemy(new BoundingRectangle(50, 50, 34, 34), sheet[1], new Vector2(100, 100), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
-            enemies.Add(new Enemy(new BoundingRectangle(50, 100, 34, 34), sheet[2], new Vector2(200, 200), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
-            enemies.Add(new Enemy(new BoundingRectangle(50, 200, 34, 34), sheet[3], new Vector2(300, 300), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
-            enemies.Add(new Enemy(new BoundingRectangle(50, 400, 34, 34), sheet[4], new Vector2(400, 400), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
-            enemies.Add(new Enemy(new BoundingRectangle(50, 500, 34, 34), sheet[5], new Vector2(500, 500), new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 50, 34, 34), sheet[1], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 100, 34, 34), sheet[2], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 200, 34, 34), sheet[3], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 400, 34, 34), sheet[4], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
+            enemies.Add(new Enemy(new BoundingRectangle(50, 500, 34, 34), sheet[5], new Vector2((float)r.NextDouble(), (float)r.NextDouble()), 1, 200));
             
             world = new AxisList();
             foreach (Enemy enemy in enemies)
@@ -101,6 +101,10 @@ namespace MonoGameWindowsStarter
             player.Update(gameTime);
 
             //update logic for enemies here
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Update(gameTime);
+            }
 
             var enemyQuery = world.QueryRange(player.Bounds.X, player.Bounds.X + player.Bounds.Width);
             player.CheckForEnemyCollision(enemyQuery);
@@ -127,7 +131,7 @@ namespace MonoGameWindowsStarter
             var enemyQuery = world.QueryRange(player.Position.X - 221, player.Position.X + 400);
             foreach (Enemy enemy in enemyQuery)
             {
-                //enemy.Draw(spriteBatch);
+                enemy.Draw(spriteBatch);
             }
             Debug.WriteLine($"{enemyQuery.Count()} Platforms rendered");
 

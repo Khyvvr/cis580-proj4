@@ -37,12 +37,13 @@ namespace MonoGameWindowsStarter
 
         public BoundingRectangle Bounds => bounds;
 
-        public Enemy(BoundingRectangle bounds, Sprite sprite, Vector2 position, Vector2 speed, int movingDirection, int moveLength)
+        public Enemy(BoundingRectangle bounds, Sprite sprite, Vector2 speed, int movingDirection, int moveLength)
         {
             this.bounds = bounds;
             this.sprite = sprite;
-            this.position = position;
+            this.position = new Vector2(bounds.X, bounds.Y);
             this.velocity = speed;
+            velocity.Normalize();
             this.movement = movingDirection;
             this.moveLength = moveLength;
 
@@ -53,6 +54,9 @@ namespace MonoGameWindowsStarter
         {
             if (movement == 0)
             {
+                bounds.X = position.X;
+                bounds.Y = position.Y;
+
                 if (velocity.Y > 0)
                 {
                     animationState = EnemyAnimationState.MovingDown;
@@ -73,6 +77,9 @@ namespace MonoGameWindowsStarter
             }
             else if (movement == 1)
             {
+                bounds.X = position.X;
+                bounds.Y = position.Y;
+
                 if (velocity.X > 0)
                 {
                     animationState = EnemyAnimationState.MovingRight;
@@ -95,13 +102,12 @@ namespace MonoGameWindowsStarter
             switch (animationState)
             {
                 case EnemyAnimationState.Idle:
-                    currentFrame = 0;
+                    currentFrame = 2;
                     animationTimer = new TimeSpan(0);
                     break;
 
                 case EnemyAnimationState.MovingLeft:
                     animationTimer += gameTime.ElapsedGameTime;
-                    // Walking frames are 9 & 10
                     if (animationTimer.TotalMilliseconds > FRAME_RATE * 2)
                     {
                         animationTimer = new TimeSpan(0);
@@ -111,7 +117,6 @@ namespace MonoGameWindowsStarter
 
                 case EnemyAnimationState.MovingRight:
                     animationTimer += gameTime.ElapsedGameTime;
-                    // Walking frames are 9 & 10
                     if (animationTimer.TotalMilliseconds > FRAME_RATE * 2)
                     {
                         animationTimer = new TimeSpan(0);
@@ -132,7 +137,7 @@ namespace MonoGameWindowsStarter
                     {
                         animationTimer = new TimeSpan(0);
                     }
-                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE) + 1;
+                    currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE);
                     break;
 
             }
@@ -143,7 +148,7 @@ namespace MonoGameWindowsStarter
 #if VISUAL_DEBUG
             VisualDebugging.DrawRectangle(spriteBatch, bounds, Color.Green);
 #endif
-            sprite.Draw(spriteBatch, new Vector2(bounds.X * sprite.Width, bounds.Y), Color.White);
+            sprite.Draw(spriteBatch, position/*new Vector2(bounds.X * sprite.Width, bounds.Y)*/, Color.White);
         }
     }
 }
