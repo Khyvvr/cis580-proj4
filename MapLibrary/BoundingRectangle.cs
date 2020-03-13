@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace MapLibrary
 {
-    public struct BoundingRectangle
+    public struct BoundingRectangle : IBoundable
     {
         /// <summary>
         /// The x coordinate of the upper-left corner of the rectangle
@@ -28,6 +28,11 @@ namespace MapLibrary
         /// The height of the rectangle
         /// </summary>
         public float Height;
+
+        /// <summary>
+        /// Gets this bounding rectangle
+        /// </summary>
+        public BoundingRectangle Bounds => this;
 
         /// <summary>
         /// Constructs a new bounding rectangle.  This class is similar to a rectangle,

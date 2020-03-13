@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
+using MapLibrary;
 
 namespace MonoGameWindowsStarter
 {
@@ -17,6 +18,10 @@ namespace MonoGameWindowsStarter
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteSheet sheet;
+
+        Tileset tileset;
+        Tilemap tilemap;
+
         Player player;
         List<Enemy> enemies = new List<Enemy>();
         AxisList world;
@@ -125,7 +130,8 @@ namespace MonoGameWindowsStarter
             var t = Matrix.CreateTranslation(offset.X, offset.Y, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, t);
 
-            spriteBatch.Draw(background, new Rectangle(0, 0, 800, 800), Color.Black);
+            //spriteBatch.Draw(background, new Rectangle(0, 0, 800, 800), Color.Black);
+            tilemap.Draw(spriteBatch);
 
             // TODO: Add your drawing code here
             var enemyQuery = world.QueryRange(player.Position.X - 221, player.Position.X + 400);
