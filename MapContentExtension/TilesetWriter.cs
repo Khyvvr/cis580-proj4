@@ -64,7 +64,7 @@ namespace MapContentExtension
         /// <returns>The name of the reader</returns>
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "PlatformLibrary.TilesetReader, PlatformLibrary";
+            return "MapLibrary.TilesetReader, MapLibrary";
         }
     }
 }

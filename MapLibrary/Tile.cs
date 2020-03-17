@@ -15,7 +15,7 @@ namespace MapLibrary
 
         // The tile's texture
         private Texture2D texture;
-        
+
         #endregion
 
         #region Properties
