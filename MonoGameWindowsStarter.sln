@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameWindowsStarter", "MonoGameWindowsStarter\MonoGameWindowsStarter.csproj", "{C491FCEF-8215-49C9-A42D-400F6594F660}"
+	ProjectSection(ProjectDependencies) = postProject
+		{072CCC37-C9D9-4CEA-8C39-885C368F9493} = {072CCC37-C9D9-4CEA-8C39-885C368F9493}
+		{BA5BDDCA-3A0A-4393-9193-11AF370E6E72} = {BA5BDDCA-3A0A-4393-9193-11AF370E6E72}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapLibrary", "MapLibrary\MapLibrary.csproj", "{072CCC37-C9D9-4CEA-8C39-885C368F9493}"
 EndProject

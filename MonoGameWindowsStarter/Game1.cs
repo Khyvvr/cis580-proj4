@@ -111,8 +111,8 @@ namespace MonoGameWindowsStarter
                 enemy.Update(gameTime);
             }
 
-            var enemyQuery = world.QueryRange(player.Bounds.X, player.Bounds.X + player.Bounds.Width);
-            player.CheckForEnemyCollision(enemyQuery);
+            //var enemyQuery = world.QueryRange(player.Bounds.X, player.Bounds.X + player.Bounds.Width);
+            //player.CheckForEnemyCollision(enemyQuery);
 
             base.Update(gameTime);
         }
